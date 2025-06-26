@@ -130,17 +130,17 @@ const resumeData = {
     coreCompetencies: [
         {
             title: "Project & Client Management",
-            icon: <Briefcase className="w-6 h-6 mr-3 text-indigo-500" />,
+            icon: <Briefcase className="icon" />,
             skills: ["Agile Project Management", "Client Relationship Building", "Strategic Resource Estimation", "Sprint Planning & Retrospectives"]
         },
         {
             title: "Technical & Analytical Expertise",
-            icon: <BrainCircuit className="w-6 h-6 mr-3 text-indigo-500" />,
+            icon: <BrainCircuit className="icon" />,
             skills: ["R & RShiny Development", "Automated Testing & CI/CD", "Interactive Data Visualization", "Advanced Data Pipelining"]
         },
         {
             title: "Clinical Analytics",
-            icon: <Briefcase className="w-6 h-6 mr-3 text-indigo-500" />,
+            icon: <Briefcase className="icon" />,
             skills: ["Clinical Trial Analysis", "TLG Generation", "Pharmaverse Proficiency", "Open Source Contributions (R)"]
         }
     ],
@@ -195,17 +195,17 @@ const resumeData = {
         "Apache Spark, Edureka (Online)"
     ],
     hobbies: [
-        { name: "Specialty Coffee Aficionado", icon: <Coffee className="w-5 h-6 mr-2" /> },
-        { name: "Travel & Landscape Photographer", icon: <Camera className="w-5 h-6 mr-2" /> },
-        { name: "Perfume Collector", icon: <Wind className="w-5 h-6 mr-2" /> },
-        { name: "Hobbyist Guitarist", icon: <Guitar className="w-5 h-6 mr-2" /> }
+        { name: "Specialty Coffee Aficionado", icon: <Coffee className="icon" /> },
+        { name: "Travel & Landscape Photographer", icon: <Camera className="icon" /> },
+        { name: "Perfume Collector", icon: <Wind className="icon" /> },
+        { name: "Hobbyist Guitarist", icon: <Guitar className="icon" /> }
     ]
 };
 
 // Reusable Components
 const Section = ({ title, children, className = '' }) => (
-    <section className={`bg-white dark:bg-slate-800/50 shadow-md rounded-xl p-6 md:p-8 mb-8 ring-1 ring-slate-900/5 dark:ring-white/10 ${className}`}>
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-6 border-b-2 border-indigo-500/50 pb-3">{title}</h2>
+    <section className={`section ${className}`}>
+        <h2 className="section-title">{title}</h2>
         {children}
     </section>
 );
@@ -223,7 +223,7 @@ const AnimatedSection = ({ children }) => {
         if (ref.current) observer.observe(ref.current);
         return () => { if (ref.current) observer.unobserve(ref.current); };
     }, []);
-    return <div ref={ref} className={`transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>{children}</div>;
+    return <div ref={ref} className={`animated-section ${isVisible ? 'is-visible' : ''}`}>{children}</div>;
 };
 
 // Component to highlight keywords
@@ -238,7 +238,7 @@ const HighlightKeywords = ({ text, keywords }) => {
         <>
             {parts.map((part, index) =>
                 keywords.some(keyword => new RegExp(`^${keyword}$`, 'i').test(part)) ? (
-                    <strong key={index} className="text-slate-900 dark:text-slate-100 font-bold">{part}</strong>
+                    <strong key={index} className="highlight">{part}</strong>
                 ) : (
                     part
                 )
@@ -263,14 +263,14 @@ const SkillBar = ({ skill, level }) => {
     }, []);
 
     return (
-        <div ref={barRef} className="mb-4">
-            <div className="flex justify-between mb-1">
-                <span className="text-base font-medium text-slate-700 dark:text-slate-300">{skill}</span>
-                <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400">{level}%</span>
+        <div ref={barRef} className="skill-bar-wrapper">
+            <div className="skill-bar-info">
+                <span className="skill-bar-label">{skill}</span>
+                <span className="skill-bar-level">{level}%</span>
             </div>
-            <div className="w-full bg-slate-200 rounded-full h-2.5 dark:bg-slate-700">
+            <div className="skill-bar-bg">
                 <div 
-                    className="bg-indigo-500 h-2.5 rounded-full transition-all duration-1000 ease-out"
+                    className="skill-bar-fg"
                     style={{ width: isVisible ? `${level}%` : '0%' }}
                 ></div>
             </div>
@@ -283,7 +283,7 @@ const ProfessionalSummaryTab = () => (
     <AnimatedSection>
         <Section title="Professional Summary">
             {resumeData.expandedSummary.map((paragraph, index) => (
-                <p key={index} className="text-lg leading-relaxed mb-4 last:mb-0">{paragraph}</p>
+                <p key={index} className="summary-paragraph">{paragraph}</p>
             ))}
         </Section>
     </AnimatedSection>
@@ -292,13 +292,13 @@ const ProfessionalSummaryTab = () => (
 const SkillTreeTab = () => (
     <AnimatedSection>
         <Section title="Skill Tree">
-             <p className="text-lg leading-relaxed mb-8">{resumeData.skillsSummary}</p>
+             <p className="summary-paragraph">{resumeData.skillsSummary}</p>
             
-            <Section title="Key Skill Areas" className="!shadow-none !ring-0 !p-0 mb-8">
-                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <Section title="Key Skill Areas" className="sub-section">
+                 <div className="bar-chart-grid">
                     {Object.entries(resumeData.barChartSkills).map(([title, skills]) => (
                         <div key={title}>
-                            <h4 className="text-xl font-semibold text-slate-800 dark:text-slate-100 mb-4 text-center">{title}</h4>
+                            <h4 className="bar-chart-title">{title}</h4>
                             <div>
                                 {skills.map(skill => <SkillBar key={skill.skill} skill={skill.skill} level={skill.level} />)}
                             </div>
@@ -307,57 +307,57 @@ const SkillTreeTab = () => (
                 </div>
             </Section>
 
-            <Section title="Core Competencies" className="!shadow-none !ring-0 !p-0">
-                <div className="grid md:grid-cols-3 gap-8">
+            <Section title="Core Competencies" className="sub-section">
+                <div className="competencies-grid">
                     {resumeData.coreCompetencies.map((comp, index) => (
-                        <div key={index} className="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl">
-                            <div className="flex items-center mb-3">{comp.icon}<h3 className="text-xl font-semibold text-slate-900 dark:text-white">{comp.title}</h3></div>
-                            <ul className="space-y-2 text-slate-600 dark:text-slate-300">
-                                {comp.skills.map((skill, i) => <li key={i} className="flex items-center"><span className="text-indigo-500 mr-2">◆</span>{skill}</li>)}
+                        <div key={index} className="competency-card">
+                            <div className="competency-title-wrapper">{comp.icon}<h3 className="competency-title">{comp.title}</h3></div>
+                            <ul className="competency-list">
+                                {comp.skills.map((skill, i) => <li key={i}><span className="bullet">◆</span>{skill}</li>)}
                             </ul>
                         </div>
                     ))}
                 </div>
             </Section>
-            <Section title="Technical & Managerial Skills" className="!shadow-none !ring-0 !p-0">
-                <div className="grid md:grid-cols-2 gap-10">
+            <Section title="Technical & Managerial Skills" className="sub-section">
+                <div className="skills-grid">
                     <div>
-                        <h3 className="text-xl font-bold mb-4 flex items-center text-slate-900 dark:text-white"><BrainCircuit className="w-6 h-6 mr-3 text-indigo-500"/>Analytics Skills</h3>
-                        <div className="space-y-4">
+                        <h3 className="skills-subtitle"><BrainCircuit className="icon"/>Analytics Skills</h3>
+                        <div className="skills-detail-group">
                             <div>
-                                <h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">R Programming</h4>
-                                <p className="text-slate-600 dark:text-slate-400">{resumeData.analyticsSkills.r}</p>
+                                <h4>R Programming</h4>
+                                <p>{resumeData.analyticsSkills.r}</p>
                             </div>
                             <div>
-                                <h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Python</h4>
-                                <p className="text-slate-600 dark:text-slate-400">{resumeData.analyticsSkills.python}</p>
+                                <h4>Python</h4>
+                                <p>{resumeData.analyticsSkills.python}</p>
                             </div>
                             <div>
-                                <h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Core Skills & ML</h4>
-                                <p className="text-slate-600 dark:text-slate-400"><strong>Core:</strong> {resumeData.analyticsSkills.core}</p>
-                                <p className="text-slate-600 dark:text-slate-400"><strong>ML:</strong> {resumeData.analyticsSkills.ml}</p>
+                                <h4>Core Skills & ML</h4>
+                                <p><strong>Core:</strong> {resumeData.analyticsSkills.core}</p>
+                                <p><strong>ML:</strong> {resumeData.analyticsSkills.ml}</p>
                             </div>
                         </div>
                     </div>
                     <div>
-                        <h3 className="text-xl font-bold mb-4 flex items-center text-slate-900 dark:text-white"><Briefcase className="w-6 h-6 mr-3 text-indigo-500"/>Project Management Skills</h3>
-                        <div className="space-y-4">
-                            <div><h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Agile Methodologies</h4><p className="text-slate-600 dark:text-slate-400">{resumeData.projectManagementSkills.methodologies}</p></div>
-                            <div><h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Estimation & Planning</h4><p className="text-slate-600 dark:text-slate-400">{resumeData.projectManagementSkills.estimation}</p></div>
+                        <h3 className="skills-subtitle"><Briefcase className="icon"/>Project Management Skills</h3>
+                        <div className="skills-detail-group">
+                            <div><h4>Agile Methodologies</h4><p>{resumeData.projectManagementSkills.methodologies}</p></div>
+                            <div><h4>Estimation & Planning</h4><p>{resumeData.projectManagementSkills.estimation}</p></div>
                             <div>
-                                <h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Tools</h4>
-                                <div className="flex flex-wrap gap-2 mt-1">{resumeData.projectManagementSkills.tools.map((item, i) => <span key={i} className="bg-slate-200 text-slate-800 text-sm font-medium px-2.5 py-0.5 rounded-full dark:bg-slate-700 dark:text-slate-300">{item}</span>)}</div>
+                                <h4>Tools</h4>
+                                <div className="tag-container">{resumeData.projectManagementSkills.tools.map((item, i) => <span key={i} className="tag-alt">{item}</span>)}</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </Section>
-            <Section title="Technologies" className="!shadow-none !ring-0 !p-0">
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-6">
+            <Section title="Technologies" className="sub-section">
+                <div className="tech-grid">
                     {resumeData.technologies.map((tech) => (
                         <div key={tech.category}>
-                            <h4 className="font-semibold text-lg mb-3 text-slate-800 dark:text-slate-100 border-b border-indigo-200 dark:border-indigo-800 pb-1">{tech.category}</h4>
-                            <div className="flex flex-wrap gap-2">{tech.items.map((item) => <span key={item} className="bg-slate-200 text-slate-700 text-sm font-medium px-2.5 py-1 rounded-md dark:bg-slate-700 dark:text-slate-300">{item}</span>)}</div>
+                            <h4 className="tech-category-title">{tech.category}</h4>
+                            <div className="tag-container">{tech.items.map((item) => <span key={item} className="tag">{item}</span>)}</div>
                         </div>
                     ))}
                 </div>
@@ -369,24 +369,24 @@ const SkillTreeTab = () => (
 const ExperienceTab = () => (
     <AnimatedSection>
         <Section title="Professional Journey">
-            <p className="text-lg leading-relaxed mb-8">{resumeData.experienceSummary}</p>
-            <div className="space-y-12">
+            <p className="summary-paragraph">{resumeData.experienceSummary}</p>
+            <div className="experience-container">
                 {resumeData.experience.map((job, index) => (
-                    <div key={index} className="flex flex-col sm:flex-row gap-4">
-                        <div className="mt-1 flex-shrink-0"><Building className="w-6 h-6 text-indigo-500"/></div>
-                        <div className="w-full">
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-white">{job.role}</h3>
-                            <p className="font-semibold text-indigo-600 dark:text-indigo-400">
-                                <a href={job.companyUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{job.company}</a> - <span className="text-slate-500 dark:text-slate-400 font-normal">{job.location}</span>
+                    <div key={index} className="experience-job">
+                        <div className="experience-icon-wrapper"><Building className="icon"/></div>
+                        <div className="experience-details">
+                            <h3 className="job-role">{job.role}</h3>
+                            <p className="job-company">
+                                <a href={job.companyUrl} target="_blank" rel="noopener noreferrer">{job.company}</a> - <span className="job-location">{job.location}</span>
                             </p>
-                            <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{job.period}</p>
+                            <p className="job-period">{job.period}</p>
                             {job.responsibilities && Object.entries(job.responsibilities).map(([category, points]) => (
-                                <div key={category} className="mb-4">
-                                    <h4 className="font-semibold text-md text-slate-700 dark:text-slate-200 mb-2">{category}</h4>
-                                    <ul className="list-disc list-inside space-y-1.5 text-slate-600 dark:text-slate-300">{points.map((point, i) => <li key={i}>{point}</li>)}</ul>
+                                <div key={category} className="responsibilities-block">
+                                    <h4 className="responsibilities-category">{category}</h4>
+                                    <ul className="responsibilities-list">{points.map((point, i) => <li key={i}>{point}</li>)}</ul>
                                 </div>
                             ))}
-                            {job.links && <div className="mt-4 flex flex-wrap gap-4">{job.links.map((link, i) => <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center text-sm text-indigo-600 dark:text-indigo-400 hover:underline transition-colors"><Link className="w-4 h-4 mr-1.5"/>{link.name}</a>)}</div>}
+                            {job.links && <div className="links-container">{job.links.map((link, i) => <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="job-link"><Link className="icon-sm"/>{link.name}</a>)}</div>}
                         </div>
                     </div>
                 ))}
@@ -398,21 +398,21 @@ const ExperienceTab = () => (
 const EducationAndCertificationTab = () => (
     <AnimatedSection>
         <Section title="Education">
-            <div className="space-y-6">
+            <div className="education-container">
                 {resumeData.education.map((edu, index) => (
-                    <div key={index} className="flex gap-4 items-start">
-                        <div className="mt-1"><GraduationCap className="w-6 h-6 text-indigo-500"/></div>
+                    <div key={index} className="education-item">
+                        <div className="education-icon-wrapper"><GraduationCap className="icon"/></div>
                         <div>
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-white">{edu.degree}</h3>
-                            <p className="font-semibold text-indigo-600 dark:text-indigo-400">{edu.institution}</p>
-                            <p className="text-sm text-slate-500 dark:text-slate-400">{edu.period}</p>
+                            <h3 className="degree">{edu.degree}</h3>
+                            <p className="institution">{edu.institution}</p>
+                            <p className="period">{edu.period}</p>
                         </div>
                     </div>
                 ))}
             </div>
         </Section>
         <Section title="Certifications">
-            <ul className="space-y-3">{resumeData.certifications.map((cert, index) => <li key={index} className="flex items-start"><Award className="w-5 h-5 mr-3 mt-1 text-indigo-500 flex-shrink-0"/><span>{cert}</span></li>)}</ul>
+            <ul className="certifications-list">{resumeData.certifications.map((cert, index) => <li key={index}><Award className="icon-sm"/><span>{cert}</span></li>)}</ul>
         </Section>
     </AnimatedSection>
 );
@@ -420,7 +420,7 @@ const EducationAndCertificationTab = () => (
 const ActivitiesAndHobbiesTab = () => (
     <AnimatedSection>
         <Section title="Activities & Hobbies">
-            <ul className="space-y-3">{resumeData.hobbies.map((hobby, index) => <li key={index} className="flex items-center">{hobby.icon}<span>{hobby.name}</span></li>)}</ul>
+            <ul className="hobbies-list">{resumeData.hobbies.map((hobby, index) => <li key={index}>{hobby.icon}<span>{hobby.name}</span></li>)}</ul>
         </Section>
     </AnimatedSection>
 );
@@ -437,41 +437,110 @@ const FullResume = () => {
 
     return (
         <>
-            <AnimatedSection><Section title="Professional Summary"><p className="text-lg leading-relaxed">{resumeData.headerSummary}</p></Section></AnimatedSection>
-            <AnimatedSection><Section title="Core Competencies"><div className="grid md:grid-cols-3 gap-8">{resumeData.coreCompetencies.map((comp, index) => (<div key={index} className="bg-slate-100 dark:bg-slate-800/50 p-6 rounded-lg transform transition-transform duration-300 hover:scale-105 hover:shadow-xl"><div className="flex items-center mb-3">{comp.icon}<h3 className="text-xl font-semibold text-slate-900 dark:text-white">{comp.title}</h3></div><ul className="space-y-2 text-slate-600 dark:text-slate-300">{comp.skills.map((skill, i) => (<li key={i} className="flex items-center"><span className="text-indigo-500 mr-2">◆</span>{skill}</li>))}</ul></div>))}</div></Section></AnimatedSection>
-            <AnimatedSection><Section title="Technical & Managerial Skills"><div className="grid md:grid-cols-2 gap-10"><div><h3 className="text-xl font-bold mb-4 flex items-center text-slate-900 dark:text-white"><BrainCircuit className="w-6 h-6 mr-3 text-indigo-500"/>Analytics Skills</h3><div className="space-y-4"><div><h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">R Programming</h4><p className="text-slate-600 dark:text-slate-400">{resumeData.analyticsSkills.r}</p></div><div><h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Python</h4><p className="text-slate-600 dark:text-slate-400">{resumeData.analyticsSkills.python}</p></div><div><h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Core Skills & ML</h4><p className="text-slate-600 dark:text-slate-400"><strong>Core:</strong> {resumeData.analyticsSkills.core}</p><p className="text-slate-600 dark:text-slate-400"><strong>ML:</strong> {resumeData.analyticsSkills.ml}</p></div></div></div><div><h3 className="text-xl font-bold mb-4 flex items-center text-slate-900 dark:text-white"><Briefcase className="w-6 h-6 mr-3 text-indigo-500"/>Project Management Skills</h3><div className="space-y-4"><div><h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Agile Methodologies</h4><p className="text-slate-600 dark:text-slate-400">{resumeData.projectManagementSkills.methodologies}</p></div><div><h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Estimation & Planning</h4><p className="text-slate-600 dark:text-slate-400">{resumeData.projectManagementSkills.estimation}</p></div><div><h4 className="font-semibold text-lg text-slate-800 dark:text-slate-200">Tools</h4><div className="flex flex-wrap gap-2 mt-1">{resumeData.projectManagementSkills.tools.map((item, i) => (<span key={i} className="bg-slate-200 text-slate-800 text-sm font-medium px-2.5 py-0.5 rounded-full dark:bg-slate-700 dark:text-slate-300">{item}</span>))}</div></div></div></div></div></Section></AnimatedSection>
+            <AnimatedSection><Section title="Professional Summary"><p className="summary-paragraph">{resumeData.headerSummary}</p></Section></AnimatedSection>
+            <AnimatedSection><Section title="Core Competencies"><div className="competencies-grid">{resumeData.coreCompetencies.map((comp, index) => (<div key={index} className="competency-card"><div className="competency-title-wrapper">{comp.icon}<h3 className="competency-title">{comp.title}</h3></div><ul className="competency-list">{comp.skills.map((skill, i) => (<li key={i}><span className="bullet">◆</span>{skill}</li>))}</ul></div>))}</div></Section></AnimatedSection>
+            <AnimatedSection><Section title="Technical & Managerial Skills"><div className="skills-grid"><div><h3 className="skills-subtitle"><BrainCircuit className="icon"/>Analytics Skills</h3><div className="skills-detail-group"><div><h4>R Programming</h4><p>{resumeData.analyticsSkills.r}</p></div><div><h4>Python</h4><p>{resumeData.analyticsSkills.python}</p></div><div><h4>Core Skills & ML</h4><p><strong>Core:</strong> {resumeData.analyticsSkills.core}</p><p><strong>ML:</strong> {resumeData.analyticsSkills.ml}</p></div></div></div><div><h3 className="skills-subtitle"><Briefcase className="icon"/>Project Management Skills</h3><div className="skills-detail-group"><div><h4>Agile Methodologies</h4><p>{resumeData.projectManagementSkills.methodologies}</p></div><div><h4>Estimation & Planning</h4><p>{resumeData.projectManagementSkills.estimation}</p></div><div><h4>Tools</h4><div className="tag-container">{resumeData.projectManagementSkills.tools.map((item, i) => (<span key={i} className="tag-alt">{item}</span>))}</div></div></div></div></div></Section></AnimatedSection>
             <AnimatedSection>
                 <Section title="Work Experience">
-                    <div className="space-y-12">
+                    <div className="experience-container">
                         {fullResumeExperience.map((job, index) => (
-                            <div key={index} className="flex flex-col sm:flex-row gap-4">
-                                <div className="mt-1 flex-shrink-0"><Building className="w-6 h-6 text-indigo-500"/></div>
-                                <div className="w-full">
-                                    <h3 className="text-xl font-bold text-slate-900 dark:text-white">{job.role}</h3>
-                                    <p className="font-semibold text-indigo-600 dark:text-indigo-400">
-                                         <a href={job.companyUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{job.company}</a> - <span className="text-slate-500 dark:text-slate-400 font-normal">{job.location}</span>
+                            <div key={index} className="experience-job">
+                                <div className="experience-icon-wrapper"><Building className="icon"/></div>
+                                <div className="experience-details">
+                                    <h3 className="job-role">{job.role}</h3>
+                                    <p className="job-company">
+                                         <a href={job.companyUrl} target="_blank" rel="noopener noreferrer">{job.company}</a> - <span className="job-location">{job.location}</span>
                                     </p>
-                                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-4">{job.period}</p>
+                                    <p className="job-period">{job.period}</p>
                                     {job.responsibilities && Object.entries(job.responsibilities).map(([category, points]) => (
-                                        <div key={category} className="mb-4">
-                                            <h4 className="font-semibold text-md text-slate-700 dark:text-slate-200 mb-2">{category}</h4>
-                                             <ul className="list-disc list-inside space-y-1.5 text-slate-600 dark:text-slate-300">{points.map((point, i) => <li key={i}><HighlightKeywords text={point} keywords={keywordsToBold} /></li>)}</ul>
+                                        <div key={category} className="responsibilities-block">
+                                            <h4 className="responsibilities-category">{category}</h4>
+                                             <ul className="responsibilities-list">{points.map((point, i) => <li key={i}><HighlightKeywords text={point} keywords={keywordsToBold} /></li>)}</ul>
                                         </div>
                                     ))}
-                                    {job.links && <div className="mt-4 flex flex-wrap gap-4">{job.links.map((link, i) => <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="flex items-center text-sm text-indigo-600 dark:text-indigo-400 hover:underline transition-colors"><Link className="w-4 h-4 mr-1.5"/>{link.name}</a>)}</div>}
+                                    {job.links && <div className="links-container">{job.links.map((link, i) => <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="job-link"><Link className="icon-sm"/>{link.name}</a>)}</div>}
                                 </div>
                             </div>
                         ))}
                     </div>
                 </Section>
             </AnimatedSection>
-            <AnimatedSection><Section title="Technologies"><div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-8 gap-y-6">{resumeData.technologies.map((tech) => (<div key={tech.category}><h4 className="font-semibold text-lg mb-3 text-slate-800 dark:text-slate-100 border-b border-indigo-200 dark:border-indigo-800 pb-1">{tech.category}</h4><div className="flex flex-wrap gap-2">{tech.items.map((item) => (<span key={item} className="bg-slate-200 text-slate-700 text-sm font-medium px-2.5 py-1 rounded-md dark:bg-slate-700 dark:text-slate-300">{item}</span>))}</div></div>))}</div></Section></AnimatedSection>
-            <AnimatedSection><Section title="Education"><div className="space-y-6">{resumeData.education.map((edu, index) => (<div key={index} className="flex gap-4 items-start"><div className="mt-1"><GraduationCap className="w-6 h-6 text-indigo-500"/></div><div><h3 className="text-xl font-bold text-slate-900 dark:text-white">{edu.degree}</h3><p className="font-semibold text-indigo-600 dark:text-indigo-400">{edu.institution}</p><p className="text-sm text-slate-500 dark:text-slate-400">{edu.period}</p></div></div>))}</div></Section></AnimatedSection>
-            <div className="grid md:grid-cols-2 gap-8"><AnimatedSection><Section title="Certifications"><ul className="space-y-3">{resumeData.certifications.map((cert, index) => <li key={index} className="flex items-start"><Award className="w-5 h-5 mr-3 mt-1 text-indigo-500 flex-shrink-0"/><span>{cert}</span></li>)}</ul></Section></AnimatedSection><AnimatedSection><Section title="Activities & Hobbies"><ul className="space-y-3">{resumeData.hobbies.map((hobby, index) => <li key={index} className="flex items-center">{hobby.icon}<span>{hobby.name}</span></li>)}</ul></Section></AnimatedSection></div>
+            <AnimatedSection><Section title="Technologies"><div className="tech-grid">{resumeData.technologies.map((tech) => (<div key={tech.category}><h4 className="tech-category-title">{tech.category}</h4><div className="tag-container">{tech.items.map((item) => (<span key={item} className="tag">{item}</span>))}</div></div>))}</div></Section></AnimatedSection>
+            <AnimatedSection><Section title="Education"><div className="education-container">{resumeData.education.map((edu, index) => (<div key={index} className="education-item"><div className="education-icon-wrapper"><GraduationCap className="icon"/></div><div><h3 className="degree">{edu.degree}</h3><p className="institution">{edu.institution}</p><p className="period">{edu.period}</p></div></div>))}</div></Section></AnimatedSection>
+            <div className="grid md:grid-cols-2 gap-8"><AnimatedSection><Section title="Certifications"><ul className="certifications-list">{resumeData.certifications.map((cert, index) => <li key={index}><Award className="icon-sm"/><span>{cert}</span></li>)}</ul></Section></AnimatedSection><AnimatedSection><Section title="Activities & Hobbies"><ul className="hobbies-list">{resumeData.hobbies.map((hobby, index) => <li key={index}>{hobby.icon}<span>{hobby.name}</span></li>)}</ul></Section></AnimatedSection></div>
         </>
     )
 };
 
+const PdfResumeContent = () => {
+    return (
+        <div className="p-8 bg-white text-slate-900" style={{ fontFamily: 'sans-serif', fontSize: '10pt' }}>
+            <style>
+                {`
+                    .pdf-section { page-break-inside: avoid; }
+                    .pdf-job { page-break-inside: avoid; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; }
+                    .pdf-job:last-child { border-bottom: none; }
+                `}
+            </style>
+            <header className="text-center mb-6">
+                <h1 className="text-3xl font-bold text-slate-900">{resumeData.name}</h1>
+                <h2 className="text-lg mt-1 font-light text-indigo-600">{resumeData.title}</h2>
+                <div className="mt-2 flex justify-center items-center flex-wrap gap-x-3 gap-y-1 text-xs text-slate-600">
+                    <span>{resumeData.location}</span> | <a href={`tel:${resumeData.phone}`}>{resumeData.phone}</a> | <a href={`mailto:${resumeData.email}`}>{resumeData.email}</a> | <a href={resumeData.github}>GitHub</a>
+                </div>
+            </header>
+
+            <div className="pdf-section">
+                <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Professional Summary</h3>
+                <p className="text-sm leading-normal">{resumeData.headerSummary}</p>
+            </div>
+
+            <div className="pdf-section mt-4">
+                <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Work Experience</h3>
+                {resumeData.experience.map((job, index) => (
+                    <div key={index} className="pdf-job">
+                        <h4 className="text-md font-bold text-slate-900">{job.role}</h4>
+                        <p className="font-semibold text-indigo-600 text-sm">{job.company} - {job.location}</p>
+                        <p className="text-xs text-slate-500 mb-1">{job.period}</p>
+                        {Object.entries(job.responsibilities).map(([category, points]) => (
+                            <div key={category} className="mb-1">
+                                <h5 className="font-semibold text-xs text-slate-700">{category}</h5>
+                                <ul className="list-disc list-inside space-y-0.5 text-xs text-slate-600 pl-2">
+                                    {points.map((point, i) => <li key={i}>{point}</li>)}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+            
+            <div className="pdf-section mt-4">
+                 <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Technologies</h3>
+                 <div className="text-xs">
+                    {resumeData.technologies.map((tech) => (
+                        <div key={tech.category} className="flex mb-1">
+                            <strong className="w-1/4 font-semibold pr-2">{tech.category}:</strong>
+                            <span className="w-3/4">{tech.items.join(', ')}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="pdf-section mt-4">
+                <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Education</h3>
+                 <div className="space-y-2">
+                    {resumeData.education.map((edu, index) => (
+                        <div key={index}>
+                            <h4 className="text-md font-bold text-slate-900">{edu.degree}</h4>
+                            <p className="font-semibold text-sm text-slate-700">{edu.institution}</p>
+                            <p className="text-xs text-slate-500">{edu.period}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
 
 // Main App Component
 const App = () => {
@@ -479,7 +548,7 @@ const App = () => {
     const [activeTab, setActiveTab] = useState('Summary');
 
     useEffect(() => {
-        document.documentElement.classList.toggle('dark', isDarkMode);
+        document.documentElement.setAttribute('data-theme', isDarkMode ? 'dark' : 'light');
         const script = document.createElement('script');
         script.src = "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
         script.async = true;
@@ -487,7 +556,7 @@ const App = () => {
         return () => {
             document.body.removeChild(script);
         }
-    }, [isDarkMode]);
+    }, []);
 
     const toggleTheme = () => setIsDarkMode(!isDarkMode);
 
@@ -503,7 +572,7 @@ const App = () => {
             };
             window.html2pdf().from(resumeElement).set(opt).save();
         } else {
-            console.error("PDF generation library not found.");
+            console.error("PDF generation library not found or resume element not found.");
         }
     };
 
@@ -529,40 +598,174 @@ const App = () => {
     };
 
     return (
-        <div className="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-200 min-h-screen font-sans transition-colors duration-300">
-            <div className="container mx-auto p-4 sm:p-6 lg:p-8 max-w-5xl">
-                <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
-                     <button onClick={handleDownload} className="flex items-center gap-2 p-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-900">
-                        <Download className="w-5 h-5 text-indigo-500" />
-                        <span className="text-sm font-semibold pr-2 hidden sm:inline">Download PDF</span>
+        <div className="app-wrapper">
+            <style>{`
+                /* Global Styles & Variables */
+                :root {
+                    --bg-color: #f1f5f9;
+                    --text-color: #334155;
+                    --header-color: #1e293b;
+                    --accent-color: #4f46e5;
+                    --card-bg-color: #ffffff;
+                    --border-color: #e2e8f0;
+                    --secondary-text-color: #64748b;
+                }
+                [data-theme='dark'] {
+                    --bg-color: #0f172a;
+                    --text-color: #cbd5e1;
+                    --header-color: #f8fafc;
+                    --accent-color: #818cf8;
+                    --card-bg-color: #1e293b;
+                    --border-color: #334155;
+                    --secondary-text-color: #94a3b8;
+                }
+                body {
+                    font-family: sans-serif;
+                    background-color: var(--bg-color);
+                    color: var(--text-color);
+                    transition: background-color 0.3s, color 0.3s;
+                    line-height: 1.6;
+                }
+                .app-wrapper {
+                    max-width: 1024px;
+                    margin: 0 auto;
+                    padding: 2rem 1rem;
+                }
+                
+                /* Header */
+                .app-header { text-align: center; margin-top: 3rem; margin-bottom: 2rem; }
+                .app-header h1 { font-size: 3rem; font-weight: bold; color: var(--header-color); }
+                .app-header h2 { font-size: 1.5rem; font-weight: 300; color: var(--accent-color); margin-top: 0.5rem; }
+                .contact-info { display: flex; justify-content: center; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.5rem; color: var(--secondary-text-color); }
+                .contact-info a { color: var(--secondary-text-color); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+                .contact-info a:hover { color: var(--accent-color); }
+                .contact-info-item { display: flex; align-items: center; gap: 0.5rem; }
+                .icon { width: 1.25rem; height: 1.25rem; }
+                .icon-sm { width: 1rem; height: 1rem; }
+
+                /* Controls */
+                .controls-container { position: fixed; top: 1rem; right: 1rem; z-index: 50; display: flex; align-items: center; gap: 0.5rem; }
+                .control-button { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem; border-radius: 9999px; background-color: #e2e8f0; transition: all 0.3s; border: none; cursor: pointer; }
+                [data-theme='dark'] .control-button { background-color: #334155; }
+                .control-button:hover { background-color: #cbd5e1; }
+                [data-theme='dark'] .control-button:hover { background-color: #475569; }
+                .control-button .icon { color: var(--accent-color); }
+                .control-button span { font-size: 0.875rem; font-weight: 600; padding-right: 0.5rem; }
+
+                /* Tabs */
+                .tabs-container { position: sticky; top: 0; background-color: rgba(241, 245, 249, 0.8); backdrop-filter: blur(4px); z-index: 40; padding: 1rem 0; margin-bottom: 2rem; }
+                 [data-theme='dark'] .tabs-container { background-color: rgba(15, 23, 42, 0.8); }
+                .tabs-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 0.5rem; }
+                .tab-button { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; font-size: 1rem; font-weight: 600; border-radius: 0.5rem 0.5rem 0 0; border: none; background: transparent; cursor: pointer; transition: all 0.3s; color: var(--secondary-text-color); border-bottom: 2px solid transparent; }
+                .tab-button.active { color: var(--accent-color); border-bottom-color: var(--accent-color); }
+                .tab-button:not(.active):hover { color: var(--accent-color); background-color: #e2e8f0; }
+                 [data-theme='dark'] .tab-button:not(.active):hover { background-color: #1e293b; }
+
+                /* Sections & Cards */
+                .section { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem 2rem; margin-bottom: 2rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1); }
+                .section-title { font-size: 1.875rem; font-weight: bold; color: var(--header-color); margin-bottom: 1.5rem; padding-bottom: 0.75rem; border-bottom: 2px solid var(--accent-color); }
+                .sub-section { box-shadow: none; border: none; padding: 0; }
+
+                /* Animated Section */
+                .animated-section { transition: all 0.7s ease-in-out; opacity: 0; transform: translateY(2rem); }
+                .animated-section.is-visible { opacity: 1; transform: translateY(0); }
+
+                /* Specific Component Styles */
+                .summary-paragraph { font-size: 1.125rem; line-height: 1.75; margin-bottom: 1rem; }
+                .bar-chart-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+                .bar-chart-title { font-size: 1.25rem; font-weight: 600; color: var(--header-color); margin-bottom: 1rem; text-align: center; }
+                .competencies-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+                .competency-card { background-color: #f1f5f9; padding: 1.5rem; border-radius: 0.5rem; transition: transform 0.3s; }
+                 [data-theme='dark'] .competency-card { background-color: #334155; }
+                .competency-card:hover { transform: translateY(-5px); }
+                .competency-title-wrapper { display: flex; align-items: center; margin-bottom: 0.75rem; gap: 0.75rem; }
+                .competency-title { font-size: 1.25rem; font-weight: 600; color: var(--header-color); }
+                .competency-list { list-style: none; padding: 0; margin: 0; space-y: 0.5rem; color: var(--secondary-text-color); }
+                .competency-list li { display: flex; align-items: center; }
+                .bullet { color: var(--accent-color); margin-right: 0.5rem; }
+                .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2.5rem; margin-top: 2rem;}
+                .skills-subtitle { font-size: 1.25rem; font-weight: bold; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem; color: var(--header-color); }
+                .skills-detail-group > div { margin-bottom: 1rem; }
+                .skills-detail-group h4 { font-size: 1.125rem; font-weight: 600; color: var(--text-color); }
+                .skills-detail-group p { color: var(--secondary-text-color); }
+                .tag-container { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.25rem; }
+                .tag { background-color: #e2e8f0; color: #475569; font-size: 0.875rem; font-weight: 500; padding: 0.25rem 0.625rem; border-radius: 0.375rem; }
+                .tag-alt { background-color: #e2e8f0; color: #475569; font-size: 0.875rem; font-weight: 500; padding: 0.125rem 0.625rem; border-radius: 9999px; }
+                 [data-theme='dark'] .tag, [data-theme='dark'] .tag-alt { background-color: #475569; color: #cbd5e1; }
+                .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem 2rem; }
+                .tech-category-title { font-weight: 600; font-size: 1.125rem; margin-bottom: 0.75rem; color: var(--header-color); border-bottom: 1px solid var(--border-color); padding-bottom: 0.25rem; }
+                .experience-container { display: flex; flex-direction: column; gap: 3rem; }
+                .experience-job { display: flex; gap: 1rem; }
+                .experience-icon-wrapper { margin-top: 0.25rem; flex-shrink: 0; }
+                .job-role { font-size: 1.25rem; font-weight: bold; color: var(--header-color); }
+                .job-company a { font-weight: 600; color: var(--accent-color); text-decoration: none; }
+                .job-company a:hover { text-decoration: underline; }
+                .job-location { color: var(--secondary-text-color); font-weight: 400; }
+                .job-period { font-size: 0.875rem; color: var(--secondary-text-color); margin-bottom: 1rem; }
+                .responsibilities-block { margin-bottom: 1rem; }
+                .responsibilities-category { font-weight: 600; color: var(--text-color); margin-bottom: 0.5rem; }
+                .responsibilities-list { list-style: disc; padding-left: 1.25rem; color: var(--secondary-text-color); }
+                .links-container { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1rem; }
+                .job-link { display: flex; align-items: center; gap: 0.375rem; font-size: 0.875rem; color: var(--accent-color); text-decoration: none; }
+                .job-link:hover { text-decoration: underline; }
+                .education-container { display: flex; flex-direction: column; gap: 1.5rem; }
+                .education-item { display: flex; gap: 1rem; align-items: flex-start; }
+                .degree { font-size: 1.25rem; font-weight: bold; color: var(--header-color); }
+                .institution { font-weight: 600; color: var(--accent-color); }
+                .period { font-size: 0.875rem; color: var(--secondary-text-color); }
+                .certifications-list, .hobbies-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+                .certifications-list li, .hobbies-list li { display: flex; align-items: center; gap: 0.75rem; }
+                .highlight { color: var(--header-color); font-weight: bold; }
+                
+                /* Skill Bar */
+                .skill-bar-wrapper { margin-bottom: 1rem; }
+                .skill-bar-info { display: flex; justify-content: space-between; margin-bottom: 0.25rem; }
+                .skill-bar-label { font-size: 1rem; font-weight: 500; color: var(--text-color); }
+                .skill-bar-level { font-size: 0.875rem; font-weight: 500; color: var(--accent-color); }
+                .skill-bar-bg { width: 100%; background-color: #e2e8f0; border-radius: 9999px; height: 0.625rem; }
+                 [data-theme='dark'] .skill-bar-bg { background-color: #334155; }
+                .skill-bar-fg { background-color: var(--accent-color); height: 100%; border-radius: 9999px; transition: width 1s ease-out; }
+                
+                /* Footer */
+                .app-footer { text-align: center; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+                .app-footer p:first-child { color: var(--secondary-text-color); font-size: 0.875rem; }
+                .app-footer p:last-child { color: #94a3b8; font-size: 0.75rem; margin-top: 0.25rem; }
+                 [data-theme='dark'] .app-footer p:last-child { color: #475569; }
+
+                /* PDF Styles */
+                .pdf-section { page-break-inside: avoid; }
+                .pdf-job { page-break-inside: avoid; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; }
+                .pdf-job:last-child { border-bottom: none; }
+            `}</style>
+            <div className="app-container">
+                <div className="controls-container">
+                     <button onClick={handleDownload} className="control-button">
+                        <Download className="icon" />
+                        <span className="hidden sm:inline">Download PDF</span>
                     </button>
-                    <button onClick={toggleTheme} className="p-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-transform transform hover:scale-110 duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-900">
-                        {isDarkMode ? <Sun className="w-6 h-6 text-yellow-400" /> : <Moon className="w-6 h-6 text-indigo-500" />}
+                    <button onClick={toggleTheme} className="control-button">
+                        {isDarkMode ? <Sun className="icon" /> : <Moon className="icon" />}
                     </button>
                 </div>
 
-                <header className="text-center mt-12 mb-8">
-                    <h1 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white">{resumeData.name}</h1>
-                    <h2 className="text-2xl mt-2 font-light text-indigo-600 dark:text-indigo-400">{resumeData.title}</h2>
-                    <div className="mt-6 flex justify-center items-center flex-wrap gap-x-6 gap-y-2 text-slate-600 dark:text-slate-400">
-                        <span className="flex items-center"><MapPin className="w-4 h-4 mr-2" />{resumeData.location}</span>
-                        <a href={`tel:${resumeData.phone}`} className="flex items-center hover:text-indigo-500 transition-colors"><Phone className="w-4 h-4 mr-2" />{resumeData.phone}</a>
-                        <a href={`mailto:${resumeData.email}`} className="flex items-center hover:text-indigo-500 transition-colors"><Mail className="w-4 h-4 mr-2" />{resumeData.email}</a>
-                        <a href={resumeData.github} target="_blank" rel="noopener noreferrer" className="flex items-center hover:text-indigo-500 transition-colors"><Github className="w-4 h-4 mr-2" />insightsurge</a>
+                <header className="app-header">
+                    <h1>{resumeData.name}</h1>
+                    <h2>{resumeData.title}</h2>
+                    <div className="contact-info">
+                        <span className="contact-info-item"><MapPin className="icon-sm" />{resumeData.location}</span>
+                        <a href={`tel:${resumeData.phone}`}><Phone className="icon-sm" />{resumeData.phone}</a>
+                        <a href={`mailto:${resumeData.email}`}><Mail className="icon-sm" />{resumeData.email}</a>
+                        <a href={resumeData.github} target="_blank" rel="noopener noreferrer"><Github className="icon-sm" />insightsurge</a>
                     </div>
                 </header>
 
-                <div className="sticky top-0 z-40 bg-slate-100/80 dark:bg-slate-900/80 backdrop-blur-sm py-4 mb-8">
-                    <div className="flex justify-center flex-wrap gap-2 md:gap-4 border-b-2 border-slate-200 dark:border-slate-700 pb-2">
+                <div className="tabs-container">
+                    <div className="tabs-nav">
                         {tabs.map(tab => (
                             <button
                                 key={tab.name}
                                 onClick={() => setActiveTab(tab.name)}
-                                className={`flex items-center gap-2 px-3 py-2 text-sm md:text-base font-semibold rounded-t-lg transition-all duration-300
-                                    ${activeTab === tab.name 
-                                        ? 'text-indigo-600 dark:text-indigo-400 border-b-2 border-indigo-600 dark:border-indigo-400' 
-                                        : 'text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-800'}`
-                                }
+                                className={`tab-button ${activeTab === tab.name ? 'active' : ''}`}
                             >
                                 {tab.icon}
                                 <span className="hidden sm:inline">{tab.name}</span>
@@ -575,61 +778,15 @@ const App = () => {
                     {renderContent()}
                 </main>
                 
-                <footer className="text-center mt-12 py-6 border-t border-slate-200 dark:border-slate-800">
-                    <p className="text-sm text-slate-500 dark:text-slate-400">© 2025 Harsh Verma. All rights reserved.</p>
-                    <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Built with React, TypeScript, and Tailwind CSS.</p>
+                <footer className="app-footer">
+                    <p>© 2025 Harsh Verma. All rights reserved.</p>
+                    <p>Built with React, TypeScript, and Tailwind CSS.</p>
                 </footer>
                 
                 {/* Hidden component for PDF generation */}
-                <div className="hidden">
-                    <div id="pdf-resume-content" className="p-8 bg-white text-slate-800">
-                       <header className="text-center my-8">
-                            <h1 className="text-4xl font-bold text-slate-900">{resumeData.name}</h1>
-                            <h2 className="text-xl mt-2 font-light text-indigo-600">{resumeData.title}</h2>
-                            <div className="mt-4 flex justify-center items-center flex-wrap gap-x-4 gap-y-1 text-sm text-slate-600">
-                                <span>{resumeData.location}</span> | <a href={`tel:${resumeData.phone}`}>{resumeData.phone}</a> | <a href={`mailto:${resumeData.email}`}>{resumeData.email}</a> | <a href={resumeData.github}>GitHub</a>
-                            </div>
-                        </header>
-                         {/* We need a non-animated, simplified version for the PDF */}
-                        <Section title="Professional Summary"><p className="text-base leading-relaxed">{resumeData.headerSummary}</p></Section>
-                        <Section title="Work Experience">
-                            <div className="space-y-8">
-                                {resumeData.experience.map((job, index) => (
-                                    <div key={index} className="flex flex-col">
-                                        <h3 className="text-lg font-bold text-slate-900">{job.role}</h3>
-                                        <p className="font-semibold text-indigo-600">{job.company} - {job.location}</p>
-                                        <p className="text-xs text-slate-500 mb-2">{job.period}</p>
-                                        {Object.entries(job.responsibilities).map(([category, points]) => (
-                                            <div key={category} className="mb-2">
-                                                <h4 className="font-semibold text-sm text-slate-700 mb-1">{category}</h4>
-                                                <ul className="list-disc list-inside space-y-1 text-sm text-slate-600">{points.map((point, i) => <li key={i}>{point}</li>)}</ul>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))}
-                            </div>
-                        </Section>
-                         <Section title="Technologies">
-                             <div className="grid grid-cols-3 gap-4 text-xs">
-                                {resumeData.technologies.map((tech) => (
-                                    <div key={tech.category}>
-                                        <h4 className="font-semibold mb-1">{tech.category}</h4>
-                                        <p>{tech.items.join(', ')}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Section>
-                        <Section title="Education">
-                             <div className="space-y-4">
-                                {resumeData.education.map((edu, index) => (
-                                    <div key={index}>
-                                        <h3 className="text-md font-bold text-slate-900">{edu.degree}</h3>
-                                        <p className="font-semibold text-slate-700">{edu.institution}</p>
-                                        <p className="text-xs text-slate-500">{edu.period}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Section>
+                <div style={{ display: 'none' }}>
+                    <div id="pdf-resume-content">
+                       <PdfResumeContent />
                     </div>
                 </div>
             </div>
