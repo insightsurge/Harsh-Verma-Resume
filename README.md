@@ -1,12 +1,37 @@
-# React + Vite
+# Harsh Verma - Interactive Resume Website
+This repository contains the source code for my personal interactive resume website. It's built to provide a comprehensive and modern overview of my professional background.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Live Demo: https://harsh-verma-resume.vercel.app/ 
 
-Currently, two official plugins are available:
+## About Me
+I am a data science and analytics professional with over 7 years of experience, specializing in the development of enterprise-grade R/Shiny applications. My core expertise lies in the clinical trial analysis domain, with a strong command of CDISC standards (SDTM & ADaM).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Main Tech Stack: R, Shiny, Python, SQL, CI/CD, and modern R development frameworks like Golem and Rhino.
 
-## Expanding the ESLint configuration
+- Domains: Life Sciences, Clinical Trials, Credit Risk, and Private Equity.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- Education: Bachelor of Technology in Computer Science Engineering.
+
+## Website Features
+- Tabbed Interface: Content is organized into clear sections (Summary, Skills, Experience, etc.) for easy navigation.
+
+- Interactive Skill Visualizations: Key skills are represented with animated bar charts for a quick visual assessment of proficiency.
+
+- Dark/Light Mode: A theme toggle allows users to switch between light and dark modes based on their preference.
+
+- Downloadable PDF: A one-click button to download a print-friendly PDF version of the full resume.
+
+- Fully Responsive: The layout is designed to work seamlessly on desktops, tablets, and mobile devices.
+
+## Technologies Used
+- Front-End: React, Vite
+
+- Styling: Tailwind CSS
+
+- Icons: Lucide React
+
+- PDF Generation: html2pdf.js
+
+- Deployment: Vercel
+
+_© 2025 Harsh Verma. All rights reserved._
