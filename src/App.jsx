@@ -472,8 +472,76 @@ const FullResume = () => {
     )
 };
 
+const PdfResumeContent = () => {
+    return (
+        <div className="p-8 bg-white text-slate-900" style={{ fontFamily: 'sans-serif', fontSize: '10pt' }}>
+            <style>
+                {`
+                    .pdf-section { page-break-inside: avoid; }
+                    .pdf-job { page-break-inside: avoid; margin-bottom: 1rem; border-bottom: 1px solid #e2e8f0; padding-bottom: 1rem; }
+                    .pdf-job:last-child { border-bottom: none; }
+                `}
+            </style>
+            <header className="text-center mb-6">
+                <h1 className="text-3xl font-bold text-slate-900">{resumeData.name}</h1>
+                <h2 className="text-lg mt-1 font-light text-indigo-600">{resumeData.title}</h2>
+                <div className="mt-2 flex justify-center items-center flex-wrap gap-x-3 gap-y-1 text-xs text-slate-600">
+                    <span>{resumeData.location}</span> | <a href={`tel:${resumeData.phone}`}>{resumeData.phone}</a> | <a href={`mailto:${resumeData.email}`}>{resumeData.email}</a> | <a href={resumeData.github}>GitHub</a>
+                </div>
+            </header>
 
-// Main App Component
+            <div className="pdf-section">
+                <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Professional Summary</h3>
+                <p className="text-sm leading-normal">{resumeData.headerSummary}</p>
+            </div>
+
+            <div className="pdf-section mt-4">
+                <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Work Experience</h3>
+                {resumeData.experience.map((job, index) => (
+                    <div key={index} className="pdf-job">
+                        <h4 className="text-md font-bold text-slate-900">{job.role}</h4>
+                        <p className="font-semibold text-indigo-600 text-sm">{job.company} - {job.location}</p>
+                        <p className="text-xs text-slate-500 mb-1">{job.period}</p>
+                        {Object.entries(job.responsibilities).map(([category, points]) => (
+                            <div key={category} className="mb-1">
+                                <h5 className="font-semibold text-xs text-slate-700">{category}</h5>
+                                <ul className="list-disc list-inside space-y-0.5 text-xs text-slate-600 pl-2">
+                                    {points.map((point, i) => <li key={i}>{point}</li>)}
+                                </ul>
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+            
+            <div className="pdf-section mt-4">
+                 <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Technologies</h3>
+                 <div className="text-xs">
+                    {resumeData.technologies.map((tech) => (
+                        <div key={tech.category} className="flex mb-1">
+                            <strong className="w-1/4 font-semibold pr-2">{tech.category}:</strong>
+                            <span className="w-3/4">{tech.items.join(', ')}</span>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="pdf-section mt-4">
+                <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Education</h3>
+                 <div className="space-y-2">
+                    {resumeData.education.map((edu, index) => (
+                        <div key={index}>
+                            <h4 className="text-md font-bold text-slate-900">{edu.degree}</h4>
+                            <p className="font-semibold text-sm text-slate-700">{edu.institution}</p>
+                            <p className="text-xs text-slate-500">{edu.period}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </div>
+    );
+};
+
 const App = () => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [activeTab, setActiveTab] = useState('Summary');
@@ -582,59 +650,12 @@ const App = () => {
                 
                 {/* Hidden component for PDF generation */}
                 <div className="hidden">
-                    <div id="pdf-resume-content" className="p-8 bg-white text-slate-800">
-                       <header className="text-center my-8">
-                            <h1 className="text-4xl font-bold text-slate-900">{resumeData.name}</h1>
-                            <h2 className="text-xl mt-2 font-light text-indigo-600">{resumeData.title}</h2>
-                            <div className="mt-4 flex justify-center items-center flex-wrap gap-x-4 gap-y-1 text-sm text-slate-600">
-                                <span>{resumeData.location}</span> | <a href={`tel:${resumeData.phone}`}>{resumeData.phone}</a> | <a href={`mailto:${resumeData.email}`}>{resumeData.email}</a> | <a href={resumeData.github}>GitHub</a>
-                            </div>
-                        </header>
-                         {/* We need a non-animated, simplified version for the PDF */}
-                        <Section title="Professional Summary"><p className="text-base leading-relaxed">{resumeData.headerSummary}</p></Section>
-                        <Section title="Work Experience">
-                            <div className="space-y-8">
-                                {resumeData.experience.map((job, index) => (
-                                    <div key={index} className="flex flex-col">
-                                        <h3 className="text-lg font-bold text-slate-900">{job.role}</h3>
-                                        <p className="font-semibold text-indigo-600">{job.company} - {job.location}</p>
-                                        <p className="text-xs text-slate-500 mb-2">{job.period}</p>
-                                        {Object.entries(job.responsibilities).map(([category, points]) => (
-                                            <div key={category} className="mb-2">
-                                                <h4 className="font-semibold text-sm text-slate-700 mb-1">{category}</h4>
-                                                <ul className="list-disc list-inside space-y-1 text-sm text-slate-600">{points.map((point, i) => <li key={i}>{point}</li>)}</ul>
-                                            </div>
-                                        ))}
-                                    </div>
-                                ))}
-                            </div>
-                        </Section>
-                         <Section title="Technologies">
-                             <div className="grid grid-cols-3 gap-4 text-xs">
-                                {resumeData.technologies.map((tech) => (
-                                    <div key={tech.category}>
-                                        <h4 className="font-semibold mb-1">{tech.category}</h4>
-                                        <p>{tech.items.join(', ')}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Section>
-                        <Section title="Education">
-                             <div className="space-y-4">
-                                {resumeData.education.map((edu, index) => (
-                                    <div key={index}>
-                                        <h3 className="text-md font-bold text-slate-900">{edu.degree}</h3>
-                                        <p className="font-semibold text-slate-700">{edu.institution}</p>
-                                        <p className="text-xs text-slate-500">{edu.period}</p>
-                                    </div>
-                                ))}
-                            </div>
-                        </Section>
+                    <div id="pdf-resume-content">
+                       <PdfResumeContent />
                     </div>
                 </div>
             </div>
         </div>
     );
 };
-
 export default App;
