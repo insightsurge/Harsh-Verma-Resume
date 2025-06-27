@@ -1,32 +1,32 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mail, Phone, MapPin, Github, Sun, Moon, Briefcase, BrainCircuit, Award, Coffee, Camera, Guitar, Wind, GraduationCap, Building, Link, User, Star, BriefcaseBusiness, BookOpen, Smile, FileText, Download } from 'lucide-react';
+import { Mail, Phone, MapPin, Github, Sun, Moon, Briefcase, BrainCircuit, Award, Coffee, Camera, Guitar, Wind, GraduationCap, Building, Link, User, Star, BriefcaseBusiness, BookOpen, Smile, FileText, Download, Linkedin, Grid3x3 } from 'lucide-react';
 
 // Main Data Object
 const resumeData = {
     name: "Harsh Verma",
-    title: "R and RShiny Expert - Pharma",
+    title: "R & Shiny Expert - Pharma",
     location: "Delhi, India",
     phone: "+91 9810669477",
     email: "analyticswithharsh@gmail.com",
     github: "https://github.com/insightsurge",
-    headerSummary: "A results-driven RShiny Tech and Project Lead with a proven track record of developing enterprise-grade R/Shiny applications for the life sciences industry. My expertise lies in architecting and delivering robust, interactive dashboards for clinical trial analysis, adhering strictly to CDISC standards like SDTM and ADaM. I leverage modern R frameworks like Golem and Rhino, implement robust CI/CD pipelines, and use the Teal framework to build and deploy scalable, maintainable solutions. As a leader, I manage the full project lifecycle, direct client engagement, and foster a culture of continuous improvement through Agile and Scrum methodologies. This specialized clinical focus is complemented by a strong foundation in data science across other domains, including credit risk and private equity.",
+    headerSummary: "A results-driven RShiny Tech and Project Lead with a proven track record of developing enterprise-grade RShiny applications for the life sciences industry. My expertise lies in architecting and delivering robust, interactive dashboards for clinical trial analysis, adhering strictly to CDISC standards like SDTM and ADaM. I leverage modern R frameworks like Golem and Rhino, implement robust CI/CD pipelines, and use the Teal framework to build and deploy scalable, maintainable solutions. As a leader, I manage the full project lifecycle, direct client engagement, and foster a culture of continuous improvement through Agile and Scrum methodologies. This specialized clinical focus is complemented by a strong foundation in data science across other domains, including credit risk and private equity.",
     
     // Expanded summary for the "Professional Summary" tab
     expandedSummary: [
-        "With over seven years of dedicated experience in data science and analytics, I have cultivated a specialized expertise in leading the development of high-impact R/Shiny applications for the life sciences sector. As an RShiny Tech and Project Lead, my primary focus is on accelerating clinical trial analysis and drug development by creating sophisticated, enterprise-level solutions.",
-        "I possess a deep understanding of clinical data standards, including CDISC (SDTM/ADaM), and have a proven ability to architect and engineer robust, interactive dashboards that empower clinical scientists and stakeholders. My technical leadership extends to implementing modern R frameworks like Golem and Rhino and establishing comprehensive testing protocols with `testthat` and `shinytest2`, all integrated into automated CI/CD pipelines for continuous validation and deployment.",
+        "With over seven years of dedicated experience in data science and analytics, I have cultivated a specialized expertise in leading the development of high-impact R and Shiny solutions for the life sciences and finance sector. As an R/Shiny Tech and Project Lead, my primary focus is on accelerating clinical trial analysis and drug development by creating sophisticated, enterprise-level solutions.",
+        "I possess a deep understanding of clinical data standards, including CDISC (SDTM/ADaM), and have a proven ability to architect and engineer robust, interactive dashboards that empower clinical scientists and stakeholders. My technical leadership extends to implementing modern R frameworks like vanilla `shiny`, `golem` and `rhino` and establishing testing protocols with `testthat` and `shinytest2`, all integrated into automated CI/CD pipelines for continuous validation and deployment.",
         "This hands-on technical skill is paired with strong project management capabilities, where I direct the entire project lifecycle using Agile and Scrum methodologies to ensure transparent communication, on-time delivery, and strategic client engagement. While my recent work is centered in the clinical domain, my foundational experience in finance and supply-chain analytics provides me with a versatile, problem-solving mindset, allowing me to deliver value across diverse industries."
     ],
     
     // Summary for the "Skill Tree" tab
-    skillsSummary: "My skill set is a blend of deep technical expertise in data science and robust project management capabilities. I possess advanced proficiency in R and Python, specializing in the development of scalable R/Shiny applications and the implementation of CI/CD pipelines for automated testing and deployment. I leverage a wide array of data visualization, testing, and DevOps tools to ensure high-quality, reliable applications. This technical foundation is complemented by strong leadership skills in Agile methodologies, client relations, and strategic planning, enabling me to effectively lead teams and manage complex projects from conception to completion.",
+    skillsSummary: "My skill set is a blend of deep technical expertise in data science and robust project management capabilities. I possess proficiency in R, specializing in the development of scalable RShiny applications and the implementation of CI/CD pipelines for automated testing and deployment. I leverage a wide array of data visualization, testing, and DevOps tools to ensure high-quality, reliable applications. This technical foundation is complemented by strong leadership skills in Agile methodologies, client relations, and strategic planning, enabling me to effectively lead teams and manage complex projects from conception to completion.",
 
     // Summary for the "Experience" tab
     experienceSummary: "My professional journey spans over 7 years across data science and business intelligence, with a progressive focus on leadership roles within the life sciences and technology sectors. My experience ranges from developing predictive models in finance to architecting enterprise-level clinical analytics solutions with robust CI/CD practices, demonstrating a consistent ability to deliver value through data and drive impactful business decisions.",
 
     experience: [
         {
-            role: "RShiny Tech and Project Lead",
+            role: "R/Shiny Tech and Project Lead",
             company: "Appsilon",
             companyUrl: "https://www.appsilon.com/",
             location: "Delhi (Remote)",
@@ -38,16 +38,16 @@ const resumeData = {
                     "Led sprint planning, scrums, and retrospectives to foster a culture of continuous improvement and transparency."
                 ],
                 "Application Architecture & Development": [
-                    "Architected and developed specialized R/Shiny modules for the automated generation of Tables, Listings, and Graphs (TLGs) directly from CDISC ADaM datasets.",
+                    "Architected and developed specialized Shiny modules for the automated generation of Tables, Listings, and Graphs (TLGs) directly from CDISC ADaM datasets.",
                     "Built scalable and maintainable applications using modern R frameworks including golem and rhino."
                 ],
                 "Dashboarding & Visualization": [
-                    "Developed interactive R/Shiny dashboards for clients across multiple domains, ensuring all data handling and visualizations adhered strictly to project-specific requirements and standards.",
+                    "Developed interactive RShiny dashboards for clients across multiple domains, ensuring all data handling and visualizations adhered strictly to project-specific requirements and standards.",
                     "Created an Excel validation tool using RShiny and rhandsontable, which automated data integrity checks based on customizable YAML rules and allowed users to edit data directly within the application and submit the file.",
                     "Created high-impact, dynamic data visualizations using plotly and echarts4r."
                 ],
                 "CI/CD & Testing": [
-                     "Implemented CI/CD pipelines using GitHub Actions for automated testing, validation, and deployment of R packages and Shiny apps.",
+                     "Implemented CI/CD pipelines using GitHub Actions for automated testing, validation, and deployment of R packages and RShiny apps.",
                      "Established a comprehensive testing framework using testthat and shinytest2 to implement unit, integration, and end-to-end tests."
                 ],
                 "Internal Initiatives": [
@@ -74,10 +74,10 @@ const resumeData = {
                    "Served as the single point of contact for internal and external stakeholders, leading developments in the BI team.",
                    "Oversaw project planning, including creating BRDs and conducting effort/resource estimations.",
                    "Managed end-to-end delivery of POCs and led the development of new RShiny and PowerBI dashboards.",
-                   "Implemented a QA Automation framework that reduced manual BAU for 30+ R Shiny dashboards from 160 hrs to 20hrs monthly.",
+                   "Implemented a QA Automation framework that reduced manual BAU for 30+ RShiny dashboards from 160 hrs to 20hrs monthly.",
                    "Developed classification and regression models for the Danish insurance company to estimate policy claim probability and cost.",
                    "Designed and developed a modularized ETL framework in R which loads the data, performs complex ETL tasks, and computes KPIs.",
-                   "Developed 8 dashboards in R Shiny leveraging data marts and visualizing 80+ KPIs & charts for better decision making.",
+                   "Developed 8 dashboards in RShiny leveraging data marts and visualizing 80+ KPIs & charts for better decision making.",
                    "Automation: Automated BAU execution based on email triggers.",
                    "Developed and expanded in-house R package for more efficient and smoother ETL tasks and data QA.",
                 ]
@@ -136,12 +136,12 @@ const resumeData = {
         {
             title: "Technical & Analytical Expertise",
             icon: <BrainCircuit className="w-6 h-6 mr-3 text-indigo-500" />,
-            skills: ["R & RShiny Development", "Automated Testing & CI/CD", "Interactive Data Visualization", "Advanced Data Pipelining"]
+            skills: ["R & RShiny Development", "Automated Testing & CI/CD", "Interactive Data Visualization", "Data Pipelining and Reporting"]
         },
         {
             title: "Clinical Analytics",
             icon: <Briefcase className="w-6 h-6 mr-3 text-indigo-500" />,
-            skills: ["Clinical Trial Analysis", "TLG Generation", "Pharmaverse Proficiency", "Open Source Contributions (R)"]
+            skills: ["Clinical Trial Analysis", "TLG Generation", "Pharmaverse Proficiency", "SAS to R"]
         }
     ],
     technologies: [
@@ -155,7 +155,7 @@ const resumeData = {
         { category: "DevOps & Platforms", items: ["Git", "GitHub", "GitLab", "Docker", "CI/CD"] },
     ],
     barChartSkills: {
-        "R & Shiny Expertise": [
+        "RShiny Expertise": [
             { skill: 'Tidyverse & Data Manipulation', level: 95 },
             { skill: 'Shiny UI/UX', level: 90 },
             { skill: 'Data Viz', level: 85 },
@@ -178,7 +178,7 @@ const resumeData = {
         ]
     },
     analyticsSkills: {
-        r: "Expert in the tidyverse ecosystem, R package development, creating scalable and modular Shiny applications, API development with plumber, and high-performance computing in R.",
+        r: "Expert in the tidyverse ecosystem and R package development. Specialized in creating scalable, modular, and high-performance RShiny applications for enterprise-level deployment.",
         python: "Proficient with pandas for data manipulation, NumPy for numerical operations, and scikit-learn for machine learning tasks.",
         core: "Exploratory Data Analysis (EDA), Market Basket Analysis, Financial Modelling, Portfolio Analysis.",
         ml: "Linear & Logistic Regression, SVM, Gradient Boosting, CART, K-means, PCA, TF-IDF."
@@ -186,7 +186,7 @@ const resumeData = {
     projectManagementSkills: {
         methodologies: "Expert in Agile and Scrum frameworks, adept at facilitating daily stand-ups, sprint planning sessions, comprehensive reviews, and constructive retrospectives to ensure continuous improvement and team alignment.",
         estimation: "Skilled in team capacity planning and resource estimation to deliver projects on time and within budget.",
-        tools: ["Jira", "GitHub Projects", "Figma", "draw.io", "ClickUp"]
+        tools: ["Jira", "GitHub & GitLab Projects", "Figma", "draw.io", "Excel", "Powerpoint"]
     },
     certifications: [
         "Data Science with R, ScholarsPro (Gurugram)",
@@ -238,7 +238,7 @@ const HighlightKeywords = ({ text, keywords }) => {
         <>
             {parts.map((part, index) =>
                 keywords.some(keyword => new RegExp(`^${keyword}$`, 'i').test(part)) ? (
-                    <strong key={index} className="text-slate-900 dark:text-slate-100 font-bold">{part}</strong>
+                    <strong key={index} className="font-bold">{part}</strong>
                 ) : (
                     part
                 )
@@ -357,7 +357,7 @@ const SkillTreeTab = () => (
                     {resumeData.technologies.map((tech) => (
                         <div key={tech.category}>
                             <h4 className="font-semibold text-lg mb-3 text-slate-800 dark:text-slate-100 border-b border-indigo-200 dark:border-indigo-800 pb-1">{tech.category}</h4>
-                            <div className="flex flex-wrap gap-2">{tech.items.map((item) => <span key={item} className="bg-slate-200 text-slate-700 text-sm font-medium px-2.5 py-1 rounded-md dark:bg-slate-700 dark:text-slate-300">{item}</span>)}</div>
+                            <div className="flex flex-wrap gap-2">{tech.items.map((item) => (<span key={item} className="bg-slate-200 text-slate-700 text-sm font-medium px-2.5 py-1 rounded-md dark:bg-slate-700 dark:text-slate-300">{item}</span>))}</div>
                         </div>
                     ))}
                 </div>
@@ -425,8 +425,19 @@ const ActivitiesAndHobbiesTab = () => (
     </AnimatedSection>
 );
 
+const PortfolioTab = () => (
+    <AnimatedSection>
+        <Section title="Portfolio">
+             <div className="text-center mt-12 p-8 bg-slate-100 dark:bg-slate-800/50 rounded-xl">
+                <h4 className="text-2xl font-semibold text-slate-500 dark:text-slate-400">More Projects Coming Soon...</h4>
+            </div>
+        </Section>
+    </AnimatedSection>
+);
+
+
 const FullResume = () => {
-    const keywordsToBold = ["Scrum", "TLGs", "CDISC ADaM", "RShiny", "SDTM", "ADaM", "golem", "rhino", "plotly", "echarts4r", "testthat", "shinytest2", "Quarto", "R Shiny", "PowerBI", "ETL", "KPIs", "R package", "scorecard model", "sales prediction pipeline", "association mining algorithm", "CI/CD", "GitHub Actions"];
+    const keywordsToBold = ["Scrum", "TLGs", "CDISC ADaM", "RShiny", "SDTM", "ADaM", "golem", "rhino", "plotly", "echarts4r", "testthat", "shinytest2", "Quarto", "PowerBI", "ETL", "KPIs", "R package", "R packages", "scorecard model", "sales prediction pipeline", "association mining algorithm", "CI/CD", "GitHub Actions"];
     const fullResumeExperience = JSON.parse(JSON.stringify(resumeData.experience));
     // Remove teal from the full resume view as well
     if (fullResumeExperience[0] && fullResumeExperience[0].responsibilities["Application Architecture & Development"]) {
@@ -473,6 +484,7 @@ const FullResume = () => {
 };
 
 const PdfResumeContent = () => {
+    const keywordsToBold = ["Scrum", "TLGs", "CDISC ADaM", "RShiny", "SDTM", "ADaM", "golem", "rhino", "plotly", "echarts4r", "testthat", "shinytest2", "Quarto", "PowerBI", "ETL", "KPIs", "R package", "R packages", "scorecard model", "sales prediction pipeline", "association mining algorithm", "CI/CD", "GitHub Actions"];
     return (
         <div className="p-8 bg-white text-slate-900" style={{ fontFamily: 'sans-serif', fontSize: '10pt' }}>
             <style>
@@ -506,7 +518,7 @@ const PdfResumeContent = () => {
                             <div key={category} className="mb-1">
                                 <h5 className="font-semibold text-xs text-slate-700">{category}</h5>
                                 <ul className="list-disc list-inside space-y-0.5 text-xs text-slate-600 pl-2">
-                                    {points.map((point, i) => <li key={i}>{point}</li>)}
+                                    {points.map((point, i) => <li key={i}><HighlightKeywords text={point} keywords={keywordsToBold} /></li>)}
                                 </ul>
                             </div>
                         ))}
@@ -538,6 +550,15 @@ const PdfResumeContent = () => {
                     ))}
                 </div>
             </div>
+            
+            <div className="pdf-section mt-4">
+                <h3 className="text-xl font-bold border-b-2 border-slate-300 pb-1 mb-2">Certifications</h3>
+                 <ul className="list-disc list-inside space-y-1 text-sm text-slate-700">
+                    {resumeData.certifications.map((cert, index) => (
+                        <li key={index}>{cert}</li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
@@ -553,7 +574,10 @@ const App = () => {
         script.async = true;
         document.body.appendChild(script);
         return () => {
-            document.body.removeChild(script);
+            // Check if the script is still in the body before trying to remove it.
+            if (script.parentNode) {
+                document.body.removeChild(script);
+            }
         }
     }, [isDarkMode]);
 
@@ -571,7 +595,7 @@ const App = () => {
             };
             window.html2pdf().from(resumeElement).set(opt).save();
         } else {
-            console.error("PDF generation library not found.");
+            console.error("PDF generation library not found or not loaded yet.");
         }
     };
 
@@ -582,6 +606,7 @@ const App = () => {
         { name: 'Education & Certification', icon: <BookOpen /> },
         { name: 'Hobbies', icon: <Smile /> },
         { name: 'Full Resume', icon: <FileText /> },
+        { name: 'Portfolio', icon: <Grid3x3 /> },
     ];
 
     const renderContent = () => {
@@ -592,6 +617,7 @@ const App = () => {
             case 'Education & Certification': return <EducationAndCertificationTab />;
             case 'Hobbies': return <ActivitiesAndHobbiesTab />;
             case 'Full Resume': return <FullResume />;
+            case 'Portfolio': return <PortfolioTab />;
             default: return <ProfessionalSummaryTab />;
         }
     };
@@ -604,6 +630,15 @@ const App = () => {
                         <Download className="w-5 h-5 text-indigo-500" />
                         <span className="text-sm font-semibold pr-2 hidden sm:inline">Download PDF</span>
                     </button>
+                    <a
+                        href="https://www.linkedin.com/in/harshvermavsh/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-transform transform hover:scale-110 duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-900"
+                        aria-label="LinkedIn Profile"
+                    >
+                        <Linkedin className="w-5 h-5 text-indigo-500" />
+                    </a>
                     <button onClick={toggleTheme} className="p-2 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition-transform transform hover:scale-110 duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-slate-900">
                         {isDarkMode ? <Sun className="w-6 h-6 text-yellow-400" /> : <Moon className="w-6 h-6 text-indigo-500" />}
                     </button>
@@ -632,7 +667,7 @@ const App = () => {
                                         : 'text-slate-500 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-200 dark:hover:bg-slate-800'}`
                                 }
                             >
-                                {tab.icon}
+                                {React.cloneElement(tab.icon, { className: 'w-5 h-5' })}
                                 <span className="hidden sm:inline">{tab.name}</span>
                             </button>
                         ))}
@@ -645,7 +680,7 @@ const App = () => {
                 
                 <footer className="text-center mt-12 py-6 border-t border-slate-200 dark:border-slate-800">
                     <p className="text-sm text-slate-500 dark:text-slate-400">© 2025 Harsh Verma. All rights reserved.</p>
-                    <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Built with React, TypeScript, and Tailwind CSS.</p>
+                    <p className="text-xs text-slate-400 dark:text-slate-500 mt-1">Built with React and Tailwind CSS.</p>
                 </footer>
                 
                 {/* Hidden component for PDF generation */}
